@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resultados do Exercício 2</title>
+    <title>Resposta do Exercício 3</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
@@ -14,18 +14,16 @@
         {
             try
             {
-                $valor1 = $_POST['valor1'];
-                $valor2 = $_POST['valor2'];
+                $valorA = $_POST['valorA'];
+                $valorB = $_POST['valorB'];
 
-                $soma = $valor1 + $valor2;
-
-                if ($valor1 == $valor2) {
-                    $resultado = $soma * 3;
+                if ($valorA == $valorB) {
+                    echo "<p>Números iguais: $valorA</p>";
                 } else {
-                    $resultado = $soma;
+                    $menor = min($valorA, $valorB);
+                    $maior = max($valorA, $valorB);
+                    echo "<p>Ordem crescente: $menor $maior</p>";
                 }
-
-                echo "<p>Soma: $resultado</p>";
             } catch (Exception $e)
             {
                 echo "<p class='text-danger'>Erro: ".$e->getMessage()."</p>";

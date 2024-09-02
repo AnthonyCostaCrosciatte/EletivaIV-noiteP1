@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resultados do Exercício 2</title>
+    <title>Resposta do Exercício 4</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
@@ -14,18 +14,16 @@
         {
             try
             {
-                $valor1 = $_POST['valor1'];
-                $valor2 = $_POST['valor2'];
+                $valorProduto = $_POST['valorProduto'];
 
-                $soma = $valor1 + $valor2;
-
-                if ($valor1 == $valor2) {
-                    $resultado = $soma * 3;
+                if ($valorProduto > 100.00) {
+                    $desconto = $valorProduto * 0.15;
+                    $novoValor = $valorProduto - $desconto;
+                    echo "<p>O valor original do produto era R$$valorProduto.</p>";
+                    echo "<p>Com o desconto de 15%, o novo valor é R$$novoValor.</p>";
                 } else {
-                    $resultado = $soma;
+                    echo "<p>O valor do produto é R$$valorProduto. Não há desconto aplicado.</p>";
                 }
-
-                echo "<p>Soma: $resultado</p>";
             } catch (Exception $e)
             {
                 echo "<p class='text-danger'>Erro: ".$e->getMessage()."</p>";
