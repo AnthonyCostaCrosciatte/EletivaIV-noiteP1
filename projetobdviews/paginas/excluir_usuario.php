@@ -1,20 +1,52 @@
 <?php 
     require_once 'cabecalho.php'; 
     require_once 'navbar.php';
+    require_once '../funcoes/usuarios.php';
+
+    if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+        try {
+            $id = intval($_POST['id']);  // Corrigido para `intval`
+            if (excluirUsuario($id)){
+                header ('Location: usuarios.php');
+                exit();
+            } else {
+                $erro = "Erro ao excluir o usuário!";
+            }
+        } catch (Exception $e) {  // Colocado `catch` no lugar correto
+            $erro = "Erro: ".$e->getMessage();
+        }
+    }
+
+    if (isset($_GET['id'])) {
+        $id = intval($_GET['id']);  // Corrigido para `$_GET['id']`
+        $usuario = retornaUsuarioPorId($id);
+        if ($usuario == null) {
+            header('Location: usuarios.php');
+            exit();
+        }
+    } else {
+        header('Location: usuarios.php');
+        exit();
+    }
 ?>
 
 <div class="container mt-5">
     <h2>Excluir Usuário</h2>
 
+    <?php if (isset($erro)): ?>
+        <p class="text-danger"><?= $erro ?></p> <!-- Exibindo mensagem de erro -->
+    <?php endif; ?>
+
     <p>Tem certeza de que deseja excluir o usuário abaixo?</p>
 
     <ul>
-        <li><strong>Nome:</strong> </li>
-        <li><strong>Email:</strong> </li>
-        <li><strong>Nível:</strong> </li>
+        <li><strong>Nome: <?= $usuario['nome'] ?></strong> </li>
+        <li><strong>Email: <?= $usuario['email'] ?></strong> </li>
+        <li><strong>Nível:</strong> <?= $usuario['nivel'] ?></li>
     </ul>
 
     <form method="post">
+        <input type="hidden" name="id" value="<?= $usuario['id'] ?>" />
         <button type="submit" name="confirmar" class="btn btn-danger">Excluir</button>
         <a href="usuarios.php" class="btn btn-secondary">Cancelar</a>
     </form>
