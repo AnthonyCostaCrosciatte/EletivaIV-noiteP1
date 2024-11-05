@@ -4,30 +4,29 @@
     require_once '../funcoes/produtos.php';
     require_once '../funcoes/categorias.php';
 
-
-    $categorias = buscarCAtegorias();
+    $categorias = buscarCategorias();
     $erro = '';
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST'){
-        try{
+        try {
             $nome = $_POST['nome'];
             $descricao = $_POST['descricao'];
             $preco = floatval($_POST['preco']);
             $estoque_minimo = intval($_POST['estoque_minimo']);
             $categoria_id = intval($_POST['categoria_id']);
             if (empty($nome) || empty($descricao)){
-                $erro = "informe os Valores obrigatórios!";
+                $erro = "Informe os valores obrigatórios!";
             } else {
-                if (criarProduto($nome, $descricao, $preco, $estoque_minimo, $categoria_id)){
+                if (criarProduto($nome, $descricao, 
+                                    $preco, $estoque_minimo, $categoria_id)){
                     header('Location: produtos.php');
-                    exit();        
+                    exit();
                 } else {
                     $erro = "Erro ao inserir o produto!";
                 }
             }
-
         } catch (Exception $e){
-            $erro = "Erro :".$e->getMessage();
+            $erro = "Erro: ".$e->getMessage();
         }
     }
 ?>
@@ -59,9 +58,9 @@
         <div class="mb-3">
             <label for="categoria_id" class="form-label">Categoria</label>
             <select name="categoria_id" id="categoria_id" class="form-select" required>
-            <?php foreach($categorias as $c) : ?>
-            <option value="<?= $c['id']?>"><?= $c['nome'] ?></option>
-            <?php endforeach; ?>
+                <?php foreach($categorias as $c): ?>
+                    <option value="<?= $c['id']?>"><?= $c['nome'] ?></option>
+                <?php endforeach; ?>
             </select>
         </div>
         <button type="submit" class="btn btn-primary">Criar Produto</button>

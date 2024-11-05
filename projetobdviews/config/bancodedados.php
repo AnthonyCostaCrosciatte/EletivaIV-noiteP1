@@ -25,4 +25,3 @@ class Classe {
 
 $c = new Classe();
 $c->acao();
-

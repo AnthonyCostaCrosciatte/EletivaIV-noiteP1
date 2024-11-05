@@ -13,21 +13,21 @@
                     $_SESSION['usuario'] = $usuario['nome'];
                     $_SESSION['nivel'] = $usuario['nivel'];
                     $_SESSION['acesso'] = true;
-                    header("Location: dashboard.php ");
+                    header("Location: dashboard.php");
                 } else {
-                    $erro = "Credenciais inválidas, tente novamente!";
+                    $erro = "Credenciais inválidas!";
                 }
             }
         } catch(Exception $e){
             echo "Erro: ".$e->getMessage();
         }
     }
-
-require_once 'cabecalho.php'; ?>
+    require_once 'cabecalho.php'; 
+?>
 
 <div class="container mt-5">
     <h2>Login</h2>
-    <form method="post" action="">
+    <form method="post">
         <div class="mb-3">
             <label for="email" class="form-label">Email</label>
             <input type="email" name="email" class="form-control" id="email" required>
@@ -40,7 +40,7 @@ require_once 'cabecalho.php'; ?>
     </form>
     <?php
         if(isset($erro)) echo "<p class='text-danger'>$erro</p>";
-        ?>
+    ?>
 </div>
 
 <?php require_once 'rodape.php'; ?>

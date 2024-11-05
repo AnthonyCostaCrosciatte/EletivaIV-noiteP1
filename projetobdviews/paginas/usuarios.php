@@ -18,26 +18,26 @@
             </tr>
         </thead>
         <tbody>
+            
+            <?php
 
-        <?php
+                $usuarios = todosUsuarios();
+                foreach ($usuarios as $u):
+            ?>
 
-            $usuarios = todosUsuarios();
-            foreach ($usuarios as $u):
-        ?>
+            <tr>
+                <td><?= $u['id']?></td>
+                <td><?= $u['nome']?></td>
+                <td><?= $u['email']?></td>
+                <td><?php echo $u['nivel'] == 'adm' ? 'Administrador': 'Colaborador'; ?></td>
+                <td>
+                    <a href="excluir_usuario.php?id=<?= $u['id']?>" class="btn btn-danger">Excluir</a>
+                </td>
+            </tr>
 
-        <tr>
-        <td><?= $u['id']?></td>
-        <td><?= $u['nome']?></td>
-        <td><?= $u['email']?></td>
-        <td><?php echo $u ['nivel'] == 'adm' ? 'Administrador1': 'Colaborador'; ?></td>
-        <td>
-            <a href="excluir_usuario.php?id=<?= $u['id'] ?>" class="btn btn-danger">Excluir</a>
-        </td>
-        </tr>
-
-        <?php
-            endforeach;
-        ?>
+            <?php    
+                endforeach;
+            ?>
             
         </tbody>
     </table>

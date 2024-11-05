@@ -1,8 +1,8 @@
 <?php 
     require_once 'cabecalho.php'; 
-    require_once 'navbar.php';    
+    require_once 'navbar.php';  
     require_once '../funcoes/produtos.php';
-
+    
     $produtos = buscarProdutos();
 ?>
 
@@ -22,7 +22,7 @@
             </tr>
         </thead>
         <tbody>
-
+            
             <?php foreach($produtos as $p) : ?>
             <tr>
                 <td><?= $p['id'] ?></td>
@@ -31,14 +31,12 @@
                 <td><?= $p['preco'] ?></td>
                 <td><?= $p['estoque_minimo'] ?></td>
                 <td><?= $p['nome_categoria'] ?></td>
-                <td>Calçado</td>
                 <td>
                     <a href="editar_produto.php?id=<?= $p['id'] ?>" class="btn btn-warning">Editar</a>
-                    <a href="excluir_produto.php=<?= $p['id'] ?>" class="btn btn-danger">Excluir</a>
+                    <a href="excluir_produto.php?id=<?= $p['id'] ?>" class="btn btn-danger">Excluir</a>
                 </td>
             </tr>
             <?php endforeach; ?>
-            
         </tbody>
     </table>
 </div>

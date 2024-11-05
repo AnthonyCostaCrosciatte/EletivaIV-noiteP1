@@ -3,6 +3,7 @@
     require_once 'navbar.php'; 
     require_once '../funcoes/usuarios.php';
 
+    $erro = "";
     if ($_SERVER['REQUEST_METHOD'] == 'POST'){
         try {
             $nome = $_POST['nome'];
@@ -11,20 +12,20 @@
             $nivel = 'colab';
 
             if (empty($nome) || empty($email) || empty($senha)) {
-                $erro = "Todos os campos são obrigatorios!";
-           
+                $erro = "Todos os campos são obrigatórios!";
             } else {
                 if (novoUsuario($nome, $email, $senha, $nivel)){
                     header('Location: usuarios.php');
                     exit();
                 } else {
-                    $erro = "Erro ao criar o usuário..";
+                    $erro = "Erro ao criar o usuário!";
                 }
             }
-        }catch (Exception $e){
-            echo "Erro: ". $e->getMessage();
+        } catch (Exception $e){
+            $erro = "Erro: ".$e->getMessage();
         }
     }
+
 ?>
 
 <div class="container mt-5">
