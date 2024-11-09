@@ -1,42 +1,43 @@
 <?php
     session_start();
-    if(!isset($_SESSION['acesso'])){
+    if (!isset($_SESSION['acesso'])) {
         header('Location: login.php');        
     }
 ?>
 
 <style>
-  /* Definindo o fundo com animação RGB */
+
   @keyframes rgbCycle {
     0% {
-        background-color: rgb(255, 0, 0); /* Red */
+        background-color: rgb(52, 58, 64); 
     }
     16.6% {
-        background-color: rgb(0, 255, 0); /* Green */
+        background-color: rgb(73, 80, 87); 
     }
     33.3% {
-        background-color: rgb(0, 0, 255); /* Blue */
+        background-color: rgb(52, 58, 64); 
     }
     50% {
-        background-color: rgb(255, 0, 255); /* Magenta */
+        background-color: rgb(255, 0, 255); 
     }
     66.6% {
-        background-color: rgb(255, 255, 0); /* Yellow */
+        background-color: rgb(30, 42, 71); 
     }
     83.3% {
-        background-color: rgb(0, 255, 255); /* Cyan */
+        background-color: rgb(33, 37, 41); 
     }
     100% {
-        background-color: rgb(255, 165, 0); /* Orange */
+        background-color: rgb(216, 207, 196); 
     }
-}
+  }
 
   .navbar {
-    animation: rgbCycle 10s infinite alternate;
+    animation: rgbCycle 10s infinite linear; /* 'linear' para transições suaves */
+    background-color: rgb(255, 0, 0); /* Red - cor inicial */
   }
 </style>
 
-<nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
+<nav class="navbar navbar-expand-lg" data-bs-theme="dark">
   <div class="container-fluid">
     <a class="navbar-brand" href="/dashboard">Sistema de Compras de Produtos</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -45,8 +46,7 @@
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
       <ul class="navbar-nav">
 
-        <!-- Após desenvolver o código em PHP, essa funcionalidade só será visível ao administrador -->
-         <!-- Início -->
+        <!-- Apenas visível para o administrador -->
         <?php
           if ($_SESSION['nivel'] == 'adm'):
         ?>
@@ -95,7 +95,7 @@
       <ul class="navbar-nav ms-auto">
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Seja bem vindo(a) 
+                    Seja bem-vindo(a) 
                     <?php
                       if (isset($_SESSION['usuario']))
                         echo $_SESSION['usuario'];
