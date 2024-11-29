@@ -1,10 +1,25 @@
-<?php
+<<?php
+require_once 'cabecalho.php'; 
+require_once 'navbar.php';
+require_once '../funcoes/produtos.php';
 
-    require_once 'cabecalho.php'; 
-    require_once 'navbar.php';
-    require_once '../funcoes/produtos.php';
+// Função que retorna os dados para o gráfico
+$dados = gerarDadosGraficos(); 
 
-    $dados = gerarDadosGraficos();
+// Prepara os dados para o gráfico
+$dataArray = [['Produto', 'Estoque Comprado']];
+foreach ($dados as $d) {
+    $nome = addslashes($d['nome']);
+    $estoque = filter_var($d['estoque'], FILTER_VALIDATE_INT); // Garante que o estoque seja um número inteiro
+
+    // Adiciona ao array apenas se o estoque for um número válido e maior que 0
+    if ($estoque !== false && $estoque > 0) {
+        $dataArray[] = [$nome, $estoque];
+    }
+}
+
+// Converte o array PHP para JSON para ser usado no Google Charts
+$jsonData = json_encode($dataArray);
 ?>
 
 <main class="container">
@@ -27,7 +42,7 @@
                 <?php foreach ($dados as $d): ?>
                     <tr>
                         <td><?= htmlspecialchars($d['nome']) ?></td>
-                        <td><?= htmlspecialchars($d['estoque']) ?></td>
+                        <td><?= htmlspecialchars((int)$d['estoque']) ?></td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
@@ -37,33 +52,23 @@
     <!-- Inclusão da biblioteca Google Charts -->
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
-        // Carregar a biblioteca do Google Charts
         google.charts.load('current', {'packages':['corechart']});
         google.charts.setOnLoadCallback(drawChart);
 
         function drawChart() {
-            // Array de dados que será usado no gráfico
-            var data = google.visualization.arrayToDataTable([
-                ['Produto', 'Estoque Comprado'],
-                <?php 
-                // Gerando os dados no formato adequado para o gráfico
-                foreach ($dados as $d): 
-                    // Usando json_encode para evitar problemas com aspas ou caracteres especiais
-                    echo "['" . addslashes($d['nome']) . "', " . (int)$d['estoque'] . "],";
-                endforeach;
-                ?>
-            ]);
+            // Cria o gráfico com os dados do PHP convertidos para JSON
+            var data = google.visualization.arrayToDataTable(<?= $jsonData ?>);
 
             // Opções de customização do gráfico
             var options = {
                 title: 'Estoque de Produtos Comprados',
-                hAxis: {title: 'Produtos',  titleTextStyle: {color: '#333'}},
-                vAxis: {minValue: 0},
-                chartArea: {width: '70%', height: '70%'},
-                colors: ['#28a745'] // Definindo a cor verde para as barras
+                hAxis: { title: 'Produtos', titleTextStyle: { color: '#333' } },
+                vAxis: { minValue: 0 },
+                chartArea: { width: '70%', height: '70%' },
+                colors: ['#28a745'] // Cor verde para as barras
             };
 
-            // Renderizar o gráfico na div com id 'chart_div'
+            // Renderiza o gráfico na div com id 'chart_div'
             var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
             chart.draw(data, options);
         }

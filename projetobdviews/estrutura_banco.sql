@@ -1,5 +1,7 @@
 CREATE DATABASE aulasphp;
 
+SELECT * FROM aulasphp.compra;
+
 CREATE TABLE usuario (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(100) NOT NULL,
